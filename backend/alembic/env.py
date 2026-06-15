@@ -5,7 +5,7 @@ from server.database import Base
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
+import server.models  # noqa: F401  (registers models on Base.metadata)
 from alembic import context
 
 load_dotenv()
