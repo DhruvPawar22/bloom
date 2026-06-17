@@ -22,3 +22,25 @@ body {
 #root {
   min-height: 100svh;
 }
+
+@layer components {
+  .input-wrapper {
+    @apply relative flex items-center;
+  }
+
+  .input-icon {
+    @apply absolute left-4 text-[#6b6b8a];
+  }
+
+  .input-eye {
+    @apply absolute right-4 text-[#6b6b8a];
+  }
+
+  .input-field {
+    @apply w-full pl-11 h-12 rounded-[10px] bg-[#fafafc] border border-[#e8e8f0] text-sm placeholder:text-[#b3b3c0] focus:outline-none focus:border-[#e85d75];
+  }
+
+  .input-error {
+    @apply text-xs text-[#e85d75] mt-1;
+  }
+}
