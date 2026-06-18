@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Eye, EyeOff} from "lucide-react"
 
 interface InputFieldProps {
-  type?: "email" | "password"
+  type?: "email" | "password"|"text"
   icon: React.ReactNode
   placeholder: string
   value: string

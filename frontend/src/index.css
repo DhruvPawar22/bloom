@@ -43,4 +43,40 @@ body {
   .input-error {
     @apply text-xs text-[#e85d75] mt-1;
   }
+
+  .auth-page {
+    @apply min-h-screen bg-white flex flex-col items-center justify-center px-6;
+  }
+
+  .auth-logo {
+    @apply w-16 h-16 rounded-full bg-[#e85d75] mb-3;
+  }
+
+  .auth-wordmark {
+    @apply text-[#e85d75] font-bold text-3xl mb-6;
+  }
+
+  .auth-heading {
+    @apply text-2xl font-semibold text-[#1a1a2e] mb-1;
+  }
+
+  .auth-subtitle {
+    @apply text-sm text-[#6b6b8a] mb-8;
+  }
+
+  .auth-form {
+    @apply w-full max-w-sm space-y-3;
+  }
+
+  .btn-primary {
+    @apply w-full h-12 bg-[#e85d75] text-white rounded-[12px] font-semibold text-sm mt-2 hover:opacity-90 transition-opacity;
+  }
+
+  .auth-footer {
+    @apply text-sm text-[#6b6b8a] mt-6;
+  }
+
+  .auth-link {
+    @apply text-[#e85d75] font-semibold;
+  }
 }
