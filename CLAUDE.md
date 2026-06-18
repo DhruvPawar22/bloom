@@ -187,29 +187,3 @@ High-fidelity wireframes for all 5 screens live in Penpot ("Screens" page):
 **To use Penpot MCP tools:** start the server first (`pnpm run bootstrap` from `C:\Users\dhruv\penpot\mcp`), then start Claude Code. Tools appear as `mcp__penpot__*`.
 
 ---
-
-## Ticket Status
-
-| # | Description | Status |
-|---|---|---|
-| #1 | FastAPI health endpoint + CORS | ✅ Done |
-| #2 | Frontend scaffold (Vite + React + TS) | ✅ Done |
-| #3 | PostgreSQL via Docker Compose | ✅ Done |
-| #4 | SQLAlchemy async setup | ✅ Done |
-| #5 | Alembic migrations (users table) | ✅ Done |
-| #6 | User model + register endpoint | ✅ Done |
-| #7 | Login endpoint + JWT | ✅ Done |
-| #8 | Auth dependency (`get_current_user`) | ✅ Done |
-| #9 | Frontend Login/Register pages | 🔄 In progress |
-| #10 | Auth context + token storage | ⬜ Next |
-| #11 | DailyLog model & migration | ⬜ |
-| #12 | CRUD API for daily logs | ⬜ |
-| #13 | Frontend log entry form | ⬜ |
-| #14 | Frontend calendar view | ⬜ |
-| #15 | Cycle calculation logic | ⬜ |
-| #16 | Prediction API endpoint | ⬜ |
-| #17 | Frontend dashboard | ⬜ |
-| #18–20 | Contraception tracking | ⬜ |
-| #21–25 | Partner sharing | ⬜ |
-| #26–28 | PWA (manifest, icons, iOS) | ⬜ |
-| #31–33 | Google OAuth | ⬜ |

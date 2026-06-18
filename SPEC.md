@@ -149,48 +149,30 @@ api_router.include_router(some_router, dependencies=[Depends(get_current_user)])
 | #6 | User model + register endpoint | ✅ Done |
 | #7 | Login endpoint + JWT | ✅ Done |
 | #8 | Auth dependency (`get_current_user`) | ✅ Done |
-| #9 | Frontend Login/Register pages | 🔄 In progress |
+| #9 | Frontend Login/Register pages | ✅ Done |
+| #10 | Auth context + token storage | ✅ Done |
+| #11 | DailyLog model & migration | ✅ Done |
+| #12 | CRUD API for daily logs | 🔄 In progress |
 
 ---
 
 ## What's Next
 
-### Ticket #9 — Frontend Login/Register pages
-Still needs to be coded. Designs exist in Figma.
+### Ticket #12 — CRUD API for daily logs
 
-**Files to create:**
-- `frontend/src/pages/Login.tsx`
-- `frontend/src/pages/Register.tsx`
+**Done so far:**
+- `schemas/daily_logs.py` — `LogBase`, `LogCreate`, `LogOutput`, `MedicationInput`, `MedicationOutput`
+- `crud/logs.py` — `get_log_by_date`, `create_log`, `update_log`
+- `service/logs.py` — `upsert_log` (checks for existing log, delegates to create or update)
+- `routers/daily_log.py` — `POST /logs` endpoint skeleton
 
-**Requirements:**
-- Tailwind CSS for styling (already configured)
-- Lucide React icons: `Mail`, `Lock`, `User`, `Eye`, `EyeOff`
-- Controlled inputs (useState)
-- `react-router-dom` `<Link>` between pages
-- Wire routes in `App.tsx` (`/login` → Login, `/register` → Register)
-- Call backend API via Axios on submit (ticket #10 will add auth context)
-
-**Input field pattern with icon:**
-```tsx
-<div className="relative flex items-center">
-  <Mail size={16} className="absolute left-4 text-[#6b6b8a]" />
-  <input
-    className="w-full pl-11 pr-4 h-12 rounded-[10px] bg-[#fafafc] border border-[#e8e8f0] text-sm placeholder:text-[#b3b3c0] focus:outline-none focus:border-[#e85d75]"
-    placeholder="you@example.com"
-    type="email"
-  />
-</div>
-```
-
-### Ticket #10 — Auth context + token storage
-- React context (`AuthContext`) with `user`, `login()`, `logout()`
-- Store JWT in `localStorage`
-- Axios interceptor to attach `Authorization: Bearer <token>` header
-- Redirect to `/login` when unauthenticated
+**Still needed:**
+- Wire `daily_log` router into `routers/__init__.py`
+- Add `GET /logs/{date}` endpoint + crud/service functions
+- Add `GET /logs?start=&end=` endpoint + crud/service functions
+- Test all endpoints via Swagger at `http://localhost:8000/docs`
 
 ### Upcoming tickets
-- #11 DailyLog model & migration
-- #12 CRUD API for daily logs
 - #13 Frontend log entry form
 - #14 Frontend calendar view
 - #15 Cycle calculation logic
