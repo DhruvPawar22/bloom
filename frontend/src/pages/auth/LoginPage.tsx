@@ -21,11 +21,9 @@ const LoginPage = () => {
 
 
     try {
-      await client.post("/auth/login", {
-        email,
-        password,
-      });
-      //navigate("/login");
+      const response = await client.post("/auth/login", { email, password });
+      localStorage.setItem("token", response.data.access_token);
+      navigate("/dashboard");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Something went wrong");
     }
