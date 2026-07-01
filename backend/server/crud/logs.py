@@ -33,9 +33,11 @@ async def create_log(db:AsyncSession, user_id:uuid.UUID, data: LogCreate)-> Dail
         db.add(LogSexualActivity(log_id=log.id, occurred=data.sexual_activity))
     if data.medication:
         db.add(LogMedication(log_id=log.id, occurred=data.medication.occurred, note=data.medication.note))
+    
+
     await db.commit()
-    await db.refresh(log)
-    return log
+    return await get_log_by_date(db, user_id, data.date)
+
 
 async def update_log(db: AsyncSession, existing_log: DailyLog, data: LogCreate) -> DailyLog:
 
@@ -61,8 +63,18 @@ async def update_log(db: AsyncSession, existing_log: DailyLog, data: LogCreate) 
         existing_log.medications.append(LogMedication(occurred=data.medication.occurred, note=data.medication.note))
 
     await db.commit()
-    await db.refresh(existing_log)
-    return existing_log
+    return await get_log_by_date(db, existing_log.user_id, existing_log.date)
 
 
-
+async def get_log_by_range_date(db:AsyncSession, user_id:uuid.UUID, start_date:date,end_date:date)->list[DailyLog] | None:
+    result = await db.execute(
+        select(DailyLog)
+        .where(DailyLog.user_id==user_id, DailyLog.date.between(start_date,end_date))
+        .options(
+            selectinload(DailyLog.flow_entries),
+            selectinload(DailyLog.moods),
+            selectinload(DailyLog.sexual_activity),
+            selectinload(DailyLog.medications),
+        )
+        )
+    return result.scalars().all()

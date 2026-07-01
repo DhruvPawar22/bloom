@@ -21,3 +21,9 @@ async def get_log_by_date(db: AsyncSession, user_id:uuid.UUID , log_date:date):
     if not log:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Log not found")
     return log        
+
+async def get_log_by_range(db:AsyncSession, user_id:uuid.UUID, start_date:date,end_date:date):
+    
+    log = await crud.get_log_by_range_date(db, user_id, start_date,end_date)
+
+    return log
