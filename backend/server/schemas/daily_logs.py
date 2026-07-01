@@ -39,7 +39,7 @@ class LogBase(BaseModel):
     date: date
     flow_intensity: Optional[FlowIntensity] = None
     moods: list[MoodType] = []
-    sexual_activity: bool = False
+    sexual_activity: Optional[bool] = None
     notes: Optional[str] = None
 
 

@@ -29,7 +29,7 @@ async def create_log(db:AsyncSession, user_id:uuid.UUID, data: LogCreate)-> Dail
         db.add(LogFlowEntry(log_id=log.id, intensity=data.flow_intensity))
     for mood in data.moods:
         db.add(LogMood(log_id=log.id, mood=mood))
-    if data.sexual_activity:
+    if data.sexual_activity is not None:
         db.add(LogSexualActivity(log_id=log.id, occurred=data.sexual_activity))
     if data.medication:
         db.add(LogMedication(log_id=log.id, occurred=data.medication.occurred, note=data.medication.note))
@@ -54,7 +54,7 @@ async def update_log(db: AsyncSession, existing_log: DailyLog, data: LogCreate) 
     for mood in data.moods:
         existing_log.moods.append(LogMood(mood=mood))
 
-    if data.sexual_activity:
+    if data.sexual_activity is not None:
         existing_log.sexual_activity.append(LogSexualActivity(occurred=data.sexual_activity))
 
     if data.medication:
