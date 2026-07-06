@@ -25,7 +25,7 @@ const LoginPage = () => {
     try {
       const response = await client.post("/auth/login", { email, password });
       login(response.data.access_token)
-      navigate("/dashboard");
+      navigate("/DailyLog");
     } catch (err: any) {
       setError(err.response?.data?.detail || "Something went wrong");
     }
