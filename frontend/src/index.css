@@ -47,7 +47,9 @@ body {
   .auth-page {
     @apply min-h-screen bg-white flex flex-col items-center justify-center px-6;
   }
-
+.log_page{
+      @apply bg-[#f8f8fc] flex flex-col items-center gap-2 px-6 py-8;
+}
   .auth-logo {
     @apply w-16 h-16 rounded-full bg-[#e85d75] mb-3;
   }
@@ -78,5 +80,14 @@ body {
 
   .auth-link {
     @apply text-[#e85d75] font-semibold;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

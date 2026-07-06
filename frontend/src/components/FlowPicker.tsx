@@ -16,8 +16,9 @@ export function FlowPicker({FlowIntensity, value,onChange}:FlowPickerProps)
         heavy: "#9B1B35",
     }
     return (
-        <>
-        <p>How was your flow today?</p>
+        <div className="w-full rounded-[16px] bg-white p-4">
+        <p className="text-sm font-medium text-[#1a1a2e] mb-1">How was your flow today?</p>
+        <p className="text-xs font-small text-[#6b6b8a] mb-2">Tap a shade to log intensity</p>
         <div className="flex gap-2">
             {
                 FlowIntensity.map(flow=>(
@@ -37,6 +38,6 @@ export function FlowPicker({FlowIntensity, value,onChange}:FlowPickerProps)
                 ))
             }
         </div>
-    </>
+    </div>
     )
 }  
