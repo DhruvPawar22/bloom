@@ -4,6 +4,8 @@ import { useState } from "react"
 import { type FlowIntensity, type MoodType } from "../../types"
 import { MoodPicker } from "../../components/MoodPicker"
 import {SexualPicker} from "../../components/SexualPicker"
+import { Medications } from "../../components/Medications"
+
 export function DailyLogPage()
 {
     const d = new Date()
@@ -14,6 +16,8 @@ export function DailyLogPage()
     const [flowIntensity, setFlowIntensity] = useState<FlowIntensity | null>(null)
     const [moods, setMoods] = useState<MoodType[]>([])
     const [sexualActivity,setSexualActivity] = useState(false);
+    const [medications,setMedications] = useState(false);
+    const [medicationsnote,setMedicationsnote] = useState("");
 
     const handleMood = (mood: MoodType) => {
     setMoods(prev =>
@@ -37,7 +41,8 @@ export function DailyLogPage()
                 <FlowPicker FlowIntensity={flowOptions} value={flowIntensity} onChange={setFlowIntensity} />
                 <MoodPicker moodType={moodOptions} value={moods} onChange={handleMood}/>
                 <SexualPicker value={sexualActivity} onChange={setSexualActivity}/>
-            </div>
+                <Medications medication={medications} medicationsnote={medicationsnote} setMedications={setMedications} setMedicationsnote={setMedicationsnote}/>
+            </div> 
         </div>
     )
 }
