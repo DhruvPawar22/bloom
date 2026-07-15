@@ -7,11 +7,15 @@ import {SexualPicker} from "../../components/SexualPicker"
 import { Medications } from "../../components/Medications"
 import {Note} from "../../components/Note"
 import { Button } from "@mui/material"
+import { createOrUpdateLog } from "../../api/log"
+import Alert from '@mui/material/Alert';
 
 export function DailyLogPage()
 {
     const d = new Date()
-    const iso = d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+    const displayDate = d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+
     const flowOptions: FlowIntensity[] = ["none", "spotting", "light","medium","heavy"]
     const moodOptions: MoodType[] =   ["happy","calm","energetic","focused","sad","sensitive","irritable","anxious","tired","overwhelmed"]
 
@@ -22,6 +26,8 @@ export function DailyLogPage()
     const [medicationsnote,setMedicationsnote] = useState("");
     const [note,setNote] = useState("");
 
+    const [status, setStatus] = useState<"success" | "error" | null>(null)
+
     const handleMood = (mood: MoodType) => {
     setMoods(prev =>
         prev.includes(mood)
@@ -29,7 +35,27 @@ export function DailyLogPage()
             : [...prev, mood]
         )
         }
+    async function handleSubmit()
+    {
+        const data = {
+            date:iso,
+            flow_intensity:flowIntensity,
+            moods:moods,
+            sexual_activity:sexualActivity,
+            notes:note,
+            medication:{
+                occurred:medications,
+                note:medicationsnote
+            }
+        }
+        try {
+            await createOrUpdateLog(data);
+            setStatus("success")
+        } catch (error) {
+            setStatus("error")
+        }
 
+    }
     return(
         <div className="min-h-screen bg-[#f8f8fc] flex flex-col">
             <div className="w-full rounded-[16px] bg-white p-4">
@@ -37,7 +63,7 @@ export function DailyLogPage()
                     <ChevronLeft />
                     <div className="flex flex-col">
                         <p className="auth-heading mb-0">Log For Today</p>
-                        <p className="auth-subtitle mb-0">{iso}</p>
+                        <p className="auth-subtitle mb-0">{displayDate}</p>
                     </div>
                 </div>
             </div>
@@ -49,6 +75,7 @@ export function DailyLogPage()
                 <Medications medication={medications} medicationsnote={medicationsnote} setMedications={setMedications} setMedicationsnote={setMedicationsnote}/>
                 <Note note={note} onChange={setNote}/>
                 <Button
+                    onClick={handleSubmit}
                     variant="contained"
                     fullWidth
                     sx={{
@@ -60,7 +87,10 @@ export function DailyLogPage()
                         "&:hover": { backgroundColor: "#d44d65" },
                     }}
                 >Save Log</Button>
+                {status === "success" && <Alert severity="success">Log Successfully Submitted!</Alert>}
+                {status === "error" && <Alert severity="error">There was an error in your submission.</Alert>}
             </div> 
+
         </div>
     )
 }
