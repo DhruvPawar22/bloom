@@ -152,29 +152,27 @@ api_router.include_router(some_router, dependencies=[Depends(get_current_user)])
 | #9 | Frontend Login/Register pages | ✅ Done |
 | #10 | Auth context + token storage | ✅ Done |
 | #11 | DailyLog model & migration | ✅ Done |
-| #12 | CRUD API for daily logs | 🔄 In progress |
+| #12 | CRUD API for daily logs | ✅ Done |
+| #13 | Frontend log entry form | ✅ Done |
+| #14 | Frontend calendar view | 🔄 In progress |
 
 ---
 
 ## What's Next
 
-### Ticket #12 — CRUD API for daily logs
+### Ticket #14 — Frontend calendar view
 
-**Done so far:**
-- `schemas/daily_logs.py` — `LogBase`, `LogCreate`, `LogOutput`, `MedicationInput`, `MedicationOutput`
-- `crud/logs.py` — `get_log_by_date`, `create_log`, `update_log`
-- `service/logs.py` — `upsert_log` (checks for existing log, delegates to create or update)
-- `routers/daily_log.py` — `POST /logs` endpoint skeleton
+Monthly calendar showing logged days, color-coded by flow intensity, with icons for sexual activity. Click a day to open the log entry form for that date. Future dates allowed (pre-planning).
 
-**Still needed:**
-- Wire `daily_log` router into `routers/__init__.py`
-- Add `GET /logs/{date}` endpoint + crud/service functions
-- Add `GET /logs?start=&end=` endpoint + crud/service functions
-- Test all endpoints via Swagger at `http://localhost:8000/docs`
+**Requirements:**
+- Library: `react-day-picker` (chosen for custom day cell rendering)
+- Monthly grid with prev/next navigation
+- Each day cell color-coded by flow intensity using the design system scale
+- Dots for sexual activity (violet `#8B5CF6`) and medication (emerald `#10B981`) if logged
+- Click any day → navigate to `DailyLogPage` for that date
+- Fetch logs for displayed month via `getLogsByRange(start, end)`
 
 ### Upcoming tickets
-- #13 Frontend log entry form
-- #14 Frontend calendar view
 - #15 Cycle calculation logic
 - #16 Prediction API endpoint
 - #17 Frontend dashboard
@@ -192,7 +190,7 @@ api_router.include_router(some_router, dependencies=[Depends(get_current_user)])
 docker compose up -d
 
 # Start backend (from /backend)
-poetry run uvicorn server.main:app --reload
+poetry run dev
 
 # Start frontend (from /frontend)
 npm run dev
@@ -204,5 +202,5 @@ npm run dev
 
 - **This is a learning project** — Claude acts as PM/reviewer, not code writer. The developer writes all code themselves. Claude writes code only when explicitly asked.
 - **GitHub Issues** are used for ticket tracking (labels: epic, auth, tracking, frontend, backend, pwa, sharing)
-- **Branch:** currently on `feat/auth_page`
+- **Branch:** currently on `feat/loggin`
 - **Penpot MCP** is configured for design generation (server runs locally on `http://localhost:4401/mcp` — must be started before use with `pnpm run bootstrap` from the cloned `penpot/mcp` directory)

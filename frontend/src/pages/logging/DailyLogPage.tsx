@@ -43,10 +43,7 @@ export function DailyLogPage()
             moods:moods,
             sexual_activity:sexualActivity,
             notes:note,
-            medication:{
-                occurred:medications,
-                note:medicationsnote
-            }
+            medication: medications ? { occurred: true, note: medicationsnote } : null
         }
         setLoading(true)
         try {

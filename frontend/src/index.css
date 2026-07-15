@@ -91,3 +91,51 @@ body {
     display: none;
   }
 }
+
+.rdp-day {
+  border: 1px solid #e8e8f0 !important;
+  border-radius: 10px !important;
+  width: 100% !important;
+  height: 60px !important;
+  vertical-align: top !important;
+  text-align: left !important;
+  padding: 6px 8px !important;
+  font-size: 0.875rem !important;
+  color: #1a1a2e !important;
+  position: relative !important;
+}
+
+.rdp-today {
+  border-color: #e85d75 !important;
+  color: #e85d75 !important;
+  font-weight: 600 !important;
+}
+
+.rdp-outside {
+  opacity: 0.3 !important;
+}
+
+.rdp-root {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.rdp-months {
+  width: 100% !important;
+  display: block !important;
+}
+
+.rdp-month {
+  width: 100% !important;
+}
+
+.rdp-month_grid {
+  width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: separate !important;
+  border-spacing: 4px !important;
+}
+
+.rdp-day {
+  width: 14.28% !important;
+}

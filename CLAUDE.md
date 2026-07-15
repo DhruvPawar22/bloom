@@ -38,7 +38,7 @@ Bloom is a period-tracking PWA for a single user. React 19 + TypeScript frontend
 docker compose up -d
 
 # Backend (from /backend)
-poetry run uvicorn server.main:app --reload
+poetry run dev
 
 # Frontend (from /frontend)
 npm run dev
@@ -86,7 +86,14 @@ bloom/
         └── main.tsx
 ```
 
-Pages go in `frontend/src/pages/`. No pages exist yet — they are being built on `feat/auth_page`.
+Pages go in `frontend/src/pages/`. Current branch: `feat/loggin`.
+
+**Completed pages:**
+- `frontend/src/pages/auth/` — Login, Register
+- `frontend/src/pages/logging/DailyLogPage.tsx` — log entry form (Ticket #13 done)
+
+**In progress:**
+- `frontend/src/pages/calendar/` — Ticket #14, using `react-day-picker`
 
 ---
 
