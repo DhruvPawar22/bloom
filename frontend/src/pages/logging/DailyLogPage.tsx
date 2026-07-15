@@ -25,8 +25,8 @@ export function DailyLogPage()
     const [medications,setMedications] = useState(false);
     const [medicationsnote,setMedicationsnote] = useState("");
     const [note,setNote] = useState("");
-
     const [status, setStatus] = useState<"success" | "error" | null>(null)
+    const [loading, setLoading] = useState(false)
 
     const handleMood = (mood: MoodType) => {
     setMoods(prev =>
@@ -48,11 +48,14 @@ export function DailyLogPage()
                 note:medicationsnote
             }
         }
+        setLoading(true)
         try {
             await createOrUpdateLog(data);
             setStatus("success")
         } catch (error) {
             setStatus("error")
+        } finally {
+            setLoading(false)
         }
 
     }
@@ -76,6 +79,8 @@ export function DailyLogPage()
                 <Note note={note} onChange={setNote}/>
                 <Button
                     onClick={handleSubmit}
+                    loading={loading}
+                    disabled={loading}
                     variant="contained"
                     fullWidth
                     sx={{
