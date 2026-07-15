@@ -14,7 +14,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
-        <Route path="/DailyLog" element={<DailyLogPage/>}/>
+        <Route path="/DailyLog/:date" element={<DailyLogPage/>}/>
         <Route path="/Calender" element={<CalenderPage/>}/>
       </Routes>
     </BrowserRouter>

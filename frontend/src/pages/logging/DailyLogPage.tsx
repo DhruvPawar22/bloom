@@ -1,6 +1,6 @@
 import { ChevronLeft } from "lucide-react"
 import { FlowPicker } from "../../components/FlowPicker"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { type FlowIntensity, type MoodType } from "../../types"
 import { MoodPicker } from "../../components/MoodPicker"
 import {SexualPicker} from "../../components/SexualPicker"
@@ -9,12 +9,14 @@ import {Note} from "../../components/Note"
 import { Button } from "@mui/material"
 import { createOrUpdateLog } from "../../api/log"
 import Alert from '@mui/material/Alert';
-
+import { useNavigate, useParams } from "react-router-dom"
+import { getLogByDate } from "../../api/log"
 export function DailyLogPage()
 {
+    const { date } = useParams<{ date: string }>()
     const d = new Date()
-    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
-    const displayDate = d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
+    const iso = date ?? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` 
+    const displayDate = new Date(iso + 'T00:00:00').toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
 
     const flowOptions: FlowIntensity[] = ["none", "spotting", "light","medium","heavy"]
     const moodOptions: MoodType[] =   ["happy","calm","energetic","focused","sad","sensitive","irritable","anxious","tired","overwhelmed"]
@@ -27,6 +29,8 @@ export function DailyLogPage()
     const [note,setNote] = useState("");
     const [status, setStatus] = useState<"success" | "error" | null>(null)
     const [loading, setLoading] = useState(false)
+
+    const Navigate = useNavigate()
 
     const handleMood = (mood: MoodType) => {
     setMoods(prev =>
@@ -56,11 +60,37 @@ export function DailyLogPage()
         }
 
     }
+    useEffect(()=>{
+            const fetch = async ()=>{
+        try {
+                const response = await getLogByDate(iso)
+                if (response)
+                {
+                    setFlowIntensity(response.flow_entries[0]?.intensity ?? null)
+                    setMoods(response.moods.map(item=>item.mood) ?? [])
+                    setSexualActivity(response.sexual_activity[0]?.occurred ?? false)
+                    setNote(response.notes ?? "")
+                    setMedications(response.medications[0]?.occurred ?? false)
+                    setMedicationsnote(response.medications[0]?.note ?? "")
+                }
+            }
+        
+        catch (error) {
+            setStatus("error")
+        }
+
+    }
+    fetch()
+    },[iso])
     return(
         <div className="min-h-screen bg-[#f8f8fc] flex flex-col">
             <div className="w-full rounded-[16px] bg-white p-4">
                 <div className="flex items-center gap-2">
-                    <ChevronLeft />
+                    <ChevronLeft 
+                    onClick={()=>{
+                        Navigate(`/Calender`)
+                    }}
+                    />
                     <div className="flex flex-col">
                         <p className="auth-heading mb-0">Log For Today</p>
                         <p className="auth-subtitle mb-0">{displayDate}</p>
