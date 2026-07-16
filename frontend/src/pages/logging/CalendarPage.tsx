@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { type LogOutput } from "../../types";
 import Alert from '@mui/material/Alert';
 import { CalendarDay } from "../../components/CalenderDay";
+import { Divider } from "@mui/material";
 
 export function CalenderPage()
 {
@@ -16,6 +17,16 @@ export function CalenderPage()
 
     const Navigate = useNavigate();
     const logMap = useMemo(() => new Map(log.map(l => [l.date, l])), [log])
+    const legend = ["Spotting", "Light","Medium","Heavy","Activity","Medication","Predicted"]
+    const legendColor: Record<string, string> ={
+        Spotting: "#FDDDE6",
+        Light: "#F9A8BF",
+        Medium: "#E85D75",
+        Heavy: "#9B1B35",
+        Predicted: "#FFE8EC",
+        Medication: "#10B981",
+        Activity: "#8B5CF6",
+    }
 
     function onDayClick(day:Date)
     {
@@ -49,7 +60,7 @@ export function CalenderPage()
     }, [month]);
 
     return (
-        <div>
+        <div className="min-h-screen flex flex-col px-4 py-6">
         <DayPicker
             month={month}
             animate={true}
@@ -58,7 +69,16 @@ export function CalenderPage()
             Day: (props) => <CalendarDay {...props} logMap={logMap} onDayClick={onDayClick} />
             }}
         />
+        <Divider sx={{ borderColor: "#d0d0e0", mt: 2, mx: -4 }} />
         {status==="error" && <Alert severity="error">Error fetching Entries.</Alert>}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '12px' }}>
+            {legend.map((item, index) => (
+                <li key={index} style={{ display: 'flex', alignItems: 'center', gap: '6px', listStyle: 'none' }}>
+                    <div style={{ width: '12px', height: '12px', backgroundColor: legendColor[item], borderRadius: '3px' }} />
+                    <span style={{ fontSize: '14px', fontWeight: 450, lineHeight: 1.2, color: '#6b6b8a' }}>{item}</span>
+                </li>
+            ))}
+        </div>
         </div>
     );
 }
